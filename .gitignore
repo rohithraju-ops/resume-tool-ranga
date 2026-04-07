@@ -1,0 +1,25 @@
+# Python
+rtvenv/
+__pycache__/
+*.pyc
+*.pyo
+.env
+
+# Output files
+backend/data/output/
+*.pdf
+*.tex
+
+# Credentials
+*credentials*.json
+*service_account*.json
+
+# Node
+frontend/node_modules/
+frontend/dist/
+
+# Mac
+.DS_Store
+
+# Personal data — do not push
+backend/data/profile.json

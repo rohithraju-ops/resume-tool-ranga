@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Cormorant+Garamond:ital,wght@0,600;1,600&family=DM+Sans:wght@300;400;500&display=swap');
+@import "tailwindcss";
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --font-display: 'Cormorant Garamond', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+  --bg-page: #e8e4dc;
+  --bg-solid: #f8f7f4;
+  --bg-white: #ffffff;
+  --bg-muted: #f4f3f0;
+  --border: #e8e6e1;
+  --border-light: #f0eee9;
+  --ink: #0a0a0a;
+  --ink-secondary: #555555;
+  --ink-muted: #aaaaaa;
+  --ink-ghost: #cccccc;
+  --glass-bg: rgba(255, 255, 255, 0.18);
+  --glass-border: rgba(255, 255, 255, 0.35);
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  font-family: var(--font-body);
+  background: var(--bg-page);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+}
+
+#root {
+  position: fixed;
+  inset: 24px;
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+* {
+  font-family: var(--font-body);
+}
+
+input,
+textarea,
+button {
+  font-family: var(--font-body);
+}
