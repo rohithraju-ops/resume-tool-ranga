@@ -35,7 +35,7 @@
 
   "skills": {
     "languages": ["MATLAB", "PLC Ladder Logic"],
-    "cad_modeling": ["SolidWorks", "Siemens NX", "PTC Creo", "Fusion 360", "AutoCAD", "PDM", "PrusaSlicer"],
+    "cad_modeling": ["SolidWorks", "Siemens NX", "PTC Creo", "Fusion 360", "AutoCAD", "PDM", "Pro-E", "PrusaSlicer"],
     "simulation_and_analysis": ["ANSYS FEA", "ANSYS Fluent", "Tolerance Stack-Up", "GD&T (ASME Y14.5)", "FMEA", "DFMEA", "PFMEA", "DVP"],
     "engineering_and_documentation": ["DFM", "DFA", "BOM Management", "Engineering Change Documentation", "NPD", "5-Why", "Fishbone Analysis", "Root Cause Analysis", "Corrective Actions"],
     "manufacturing": ["Plastic and Sheet Metal Design", "Twin-Sheet Thermoforming", "Surface Modeling", "3D Printing", "CNC", "Lathes", "Milling", "Arc Welding"],
