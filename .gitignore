@@ -2,24 +2,19 @@
 rtvenv/
 __pycache__/
 *.pyc
-*.pyo
-.env
 
-# Output files
+# Secrets
+backend/.env
+
+# Generated PDFs
 backend/data/output/
-*.pdf
-*.tex
 
-# Credentials
-*credentials*.json
-*service_account*.json
+# Google credentials
+*google_credentials*
 
 # Node
 frontend/node_modules/
 frontend/dist/
 
-# Mac
+# OS
 .DS_Store
-
-# Personal data — do not push
-backend/data/profile.json

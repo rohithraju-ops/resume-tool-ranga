@@ -1,0 +1,126 @@
+%-------------------------
+% Resume in LaTeX — extarticle allows real font-size control (9pt, 10pt)
+% Compression knobs (XLINESPREADX, XPROJSEPX, XSECBEFOREX, XSECAFTERX, XITEMSEPX) tuned by compile_resume in main.py
+%-------------------------
+
+\documentclass[a4paper,10pt]{extarticle}
+
+\usepackage[T1]{fontenc}
+\usepackage{mathptmx} % Times New Roman
+\usepackage[empty]{fullpage}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage{tabularx}
+\usepackage{geometry}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+
+\geometry{
+  a4paper,
+  top=0.138in,
+  bottom=0.099in,
+  left=0.099in,
+  right=0.099in
+}
+
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+\raggedbottom
+\raggedright
+
+% --- Compression knob 1: line spread ---
+\linespread{XLINESPREADX}
+
+% Section heading
+\titleformat{\section}{
+  \vspace{2pt}\bfseries\raggedright\normalsize
+}{}{0em}{}[\vspace{-6pt}\rule{\linewidth}{0.4pt}\vspace{-4pt}]
+
+% --- Compression knob 2: section spacing ---
+\titlespacing{\section}{0pt}{XSECBEFOREX}{XSECAFTERX}
+
+% --- Compression knob 3: itemize spacing ---
+\setlist[itemize]{
+  leftmargin=0.18in,
+  itemsep=XITEMSEPX,
+  parsep=0pt,
+  topsep=0pt,
+  partopsep=0pt
+}
+\renewcommand{\labelitemi}{$\bullet$}
+
+%-------------------------------------------
+\begin{document}
+
+%---------- HEADING ----------
+\begin{center}
+  {\large \textbf{RANGARAJAN NADADHUR RAMESH}} \\[2pt]
+  {\small rangarajannr27@gmail.com \textbar{} +16027488247 \textbar{} https://www.linkedin.com/in/rangarajan-n-r}
+\end{center}
+
+\vspace{2pt}
+
+%---------- SUMMARY ----------
+\section{SUMMARY}
+
+SUMMARY\_PLACEHOLDER
+
+%---------- EDUCATION ----------
+\section{EDUCATION}
+
+\noindent \textbf{Master of Science in Mechanical Engineering} \hfill \textit{May 2026} \\
+Arizona State University, Arizona, USA \hfill \textit{GPA: 3.70}
+
+\vspace{2pt}
+\noindent \textbf{Relevant Coursework:} Modern Manufacturing Methods, Intermediate Thermodynamics
+
+\vspace{4pt}
+
+\noindent \textbf{Bachelor of Technology in Mechanical Engineering} \hfill \textit{May 2021} \\
+Dayananda Sagar University, Karnataka, India \hfill \textit{CGPA: 8.36}
+
+\vspace{2pt}
+\noindent \textbf{Additional Coursework:} GD\&T based on ASME Y14.5 (Udemy), Lean Six Sigma Yellow Belt (Udemy)
+
+%---------- TECHNICAL SKILLS ----------
+\section{TECHNICAL SKILLS}
+
+\begin{itemize}[leftmargin=0.15in, itemsep=0pt, parsep=0pt, topsep=2pt]
+  SKILLS\_BLOCK\_PLACEHOLDER
+\end{itemize}
+
+%---------- PROFESSIONAL EXPERIENCE ----------
+\section{PROFESSIONAL EXPERIENCE}
+
+\noindent \textbf{Aktis Engineering Solutions Pvt. Ltd., Bangalore, India \textbar{} Design Engineer} \hfill \textit{Sep 2022 to Jul 2024}
+\begin{itemize}
+  EXP\_1\_BULLETS\_PLACEHOLDER
+\end{itemize}
+
+\vspace{2pt}
+\noindent \textbf{Pactera EDGE (now Centific), Hyderabad, India \textbar{} Project Associate} \hfill \textit{Mar 2022 to Aug 2022}
+\begin{itemize}
+  EXP\_2\_BULLETS\_PLACEHOLDER
+\end{itemize}
+
+\vspace{2pt}
+\noindent \textbf{Bosch Rexroth in Collaboration with DSU, Bangalore, Karnataka, India \textbar{} Intern} \hfill \textit{Feb 2021 to Apr 2021}
+\begin{itemize}
+  EXP\_3\_BULLETS\_PLACEHOLDER
+\end{itemize}
+
+%---------- ACADEMIC PROJECTS ----------
+\section{ACADEMIC PROJECTS}
+
+PROJECT\_1\_BLOCK
+\vspace{XPROJSEPX}
+PROJECT\_2\_BLOCK
+\vspace{XPROJSEPX}
+PROJECT\_3\_BLOCK
+\vspace{XPROJSEPX}
+PROJECT\_4\_BLOCK
+\vspace{XPROJSEPX}
+PROJECT\_5\_BLOCK
+
+\end{document}

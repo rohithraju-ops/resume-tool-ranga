@@ -9,9 +9,9 @@ export default defineConfig({
   ],
   server: {
     proxy: {
-      '/analyze': 'http://localhost:8000',
-      '/generate': 'http://localhost:8000',
-      '/download': 'http://localhost:8000',
+      '/analyze': 'http://localhost:8001',
+      '/generate': 'http://localhost:8001',
+      '/download': 'http://localhost:8001',
     }
   }
 })

@@ -1,0 +1,204 @@
+{
+  "full_name": "Rangarajan Nadadhur Ramesh",
+  "email": "rangarajannr27@gmail.com",
+  "phone": "+1 (602) 748-8247",
+  "location": "Tempe, AZ",
+  "linkedin": "https://www.linkedin.com/in/rangarajan-n-r",
+  "github": "",
+
+  "university": "Arizona State University",
+  "degree": "MS in Mechanical Engineering",
+  "gpa": "3.70",
+  "graduation_date": "May 2026",
+
+  "visa_status": "F1-OPT",
+  "requires_sponsorship": true,
+  "work_authorization_note": "Eligible for F1-OPT. Sponsorship may be required after OPT period.",
+
+  "target_roles": [
+    "Design Engineer",
+    "Manufacturing Engineer",
+    "Quality Engineer",
+    "Product Development Engineer",
+    "Process Engineer",
+    "Mechanical Engineer",
+    "Energy Engineer",
+    "Renewable Energy Engineer"
+  ],
+  "target_locations": [
+    "Remote",
+    "Open to Relocation"
+  ],
+  "salary_expectation": "75000-95000",
+  "open_to_internships": false,
+  "employment_types": ["Full-Time"],
+
+  "skills": {
+    "languages": ["MATLAB", "PLC Ladder Logic"],
+    "cad_modeling": ["SolidWorks", "Siemens NX", "PTC Creo", "Fusion 360", "AutoCAD", "PDM", "PrusaSlicer"],
+    "simulation_and_analysis": ["ANSYS FEA", "ANSYS Fluent", "Tolerance Stack-Up", "GD&T (ASME Y14.5)", "FMEA", "DFMEA", "PFMEA", "DVP"],
+    "engineering_and_documentation": ["DFM", "DFA", "BOM Management", "Engineering Change Documentation", "NPD", "5-Why", "Fishbone Analysis", "Root Cause Analysis", "Corrective Actions"],
+    "manufacturing": ["Plastic and Sheet Metal Design", "Twin-Sheet Thermoforming", "Surface Modeling", "3D Printing", "CNC", "Lathes", "Milling", "Arc Welding"],
+    "quality_and_lean": ["Lean Six Sigma", "Minitab", "2-way ANOVA / DoE"],
+    "tools_platforms": ["Microsoft Excel", "Microsoft PowerPoint", "Microsoft Word", "Microsoft Outlook", "Adobe Reader", "Google Suite"]
+  },
+
+  "work_experience": [
+    {
+      "company": "Aktis Engineering Solutions Pvt. Ltd.",
+      "location": "Bangalore, India",
+      "title": "Design Engineer",
+      "duration": "September 2022 to July 2024",
+      "bullets": [
+        "Designed production-ready plastic and sheet metal components and assemblies in SolidWorks, delivering 3D CAD models, GD&T drawings, BOMs, and release documentation for new product introductions.",
+        "Improved production release quality by 55% through structured validation workflows, peer review controls, and PFMEA contributions identifying manufacturing process failure modes.",
+        "Reduced fit and assembly issues by 30% by integrating supplier feedback and tooling constraints into tolerance stack-up analysis during DFM/DFA reviews.",
+        "Reduced design cycle time by 50% through parametric SolidWorks models and standardized drawing workflows, improving design speed and repeatability across production lines.",
+        "Reduced recurring build failures by 50% through root cause analysis and corrective actions across design and manufacturing processes.",
+        "Improved production readiness by converting concepts into production-aligned CAD models and GD&T drawings per DFM principles, enabling smoother downstream execution and sustained throughput.",
+        "Achieved 15% material cost reduction and 30% to 50% performance improvement on twin-sheet thermoformed components through geometry iteration, ANSYS FEA, and prototype testing.",
+        "Analyzed 24-hour customer test data to identify heat-loss zones, diagnose thermal inefficiencies, and drive thermal design improvements.",
+        "Collaborated with manufacturing teams and suppliers to resolve shop-floor quality issues, improve manufacturability, and support smooth transition from design to production.",
+        "Led design presentations and cross-functional review meetings with manufacturing teams across the U.S. and Mexico to align design intent with production constraints."
+      ]
+    },
+    {
+      "company": "Pactera EDGE (Centific)",
+      "location": "Hyderabad, India",
+      "title": "Project Associate",
+      "duration": "March 2022 to August 2022",
+      "bullets": [
+        "Improved team output quality from 75% to 99% and individual accuracy to 95% by identifying workflow gaps and implementing structured training, process controls, and targeted corrections.",
+        "Reviewed and validated image datasets for clarity, fine detail accuracy, and text recognition, and verified chatbot outputs for accuracy and reliability across image detection, text recognition, and search AI training pipelines."
+      ]
+    },
+    {
+      "company": "Bosch Rexroth in Collaboration with DSU",
+      "location": "Bangalore, India",
+      "title": "Intern",
+      "duration": "February 2021 to April 2021",
+      "bullets": [
+        "Developed hydraulic and pneumatic circuit layouts and PLC ladder logic for prototype industrial automation equipment, and validated workflows through iterative testing and debugging to ensure process consistency, cycle reliability, and OEE.",
+        "Documented circuit designs and automation logic to support reproducibility and knowledge transfer across the team."
+      ]
+    }
+  ],
+
+  "experience_bullets": {
+    "Aktis Engineering Solutions Pvt. Ltd.": [
+      "Designed production-ready plastic and sheet metal components and assemblies in SolidWorks, delivering 3D CAD models, GD&T drawings, BOMs, and release documentation for new product introductions.",
+      "Improved production release quality by 55% through structured validation workflows, peer review controls, and PFMEA contributions identifying manufacturing process failure modes.",
+      "Reduced fit and assembly issues by 30% by integrating supplier feedback and tooling constraints into tolerance stack-up analysis during DFM/DFA reviews.",
+      "Reduced design cycle time by 50% through parametric SolidWorks models and standardized drawing workflows, improving design speed and repeatability across production lines.",
+      "Reduced recurring build failures by 50% through root cause analysis and corrective actions across design and manufacturing processes.",
+      "Improved production readiness by converting concepts into production-aligned CAD models and GD&T drawings per DFM principles, enabling smoother downstream execution and sustained throughput.",
+      "Achieved 15% material cost reduction and 30% to 50% performance improvement on twin-sheet thermoformed components through geometry iteration, ANSYS FEA, and prototype testing.",
+      "Analyzed 24-hour customer test data to identify heat-loss zones, diagnose thermal inefficiencies, and drive thermal design improvements.",
+      "Collaborated with manufacturing teams and suppliers to resolve shop-floor quality issues, improve manufacturability, and support smooth transition from design to production.",
+      "Led design presentations and cross-functional review meetings with manufacturing teams across the U.S. and Mexico to align design intent with production constraints."
+    ],
+    "Pactera EDGE (Centific)": [
+      "Improved team output quality from 75% to 99% and individual accuracy to 95% by identifying workflow gaps and implementing structured training, process controls, and targeted corrections.",
+      "Reviewed and validated image datasets for clarity, fine detail accuracy, and text recognition, and verified chatbot outputs for accuracy and reliability across image detection, text recognition, and search AI training pipelines."
+    ],
+    "Bosch Rexroth in Collaboration with DSU": [
+      "Developed hydraulic and pneumatic circuit layouts and PLC ladder logic for prototype industrial automation equipment, and validated workflows through iterative testing and debugging to ensure process consistency, cycle reliability, and OEE.",
+      "Documented circuit designs and automation logic to support reproducibility and knowledge transfer across the team."
+    ]
+  },
+
+  "projects": [
+    {
+      "name": "Study of Twin-Sheet Thermoforming",
+      "tech": ["SolidWorks", "ANSYS FEA", "Twin-Sheet Thermoforming", "Structural Analysis"],
+      "status": "Completed",
+      "metrics": {
+        "team_size": "4 members",
+        "institution": "Arizona State University"
+      },
+      "bullets": [
+        "Led a 4-member team studying Twin-Sheet Thermoforming and its advantages over traditional manufacturing processes.",
+        "Designed Twin-Sheet structures in SolidWorks and performed FEA using ANSYS, analyzing deformation and stiffness.",
+        "Demonstrated structural and economic advantages of Twin-Sheet Thermoforming compared to conventional processes."
+      ]
+    },
+    {
+      "name": "Study of Two-Bounce LiDAR for Non-Line-of-Sight Imaging",
+      "tech": ["LiDAR", "SPAD Sensors", "NLOS Imaging", "ADAS"],
+      "status": "Completed",
+      "metrics": {
+        "team_size": "5 members",
+        "institution": "Arizona State University"
+      },
+      "bullets": [
+        "Collaborated in a 5-member team studying Two-Bounce LiDAR and NLOS imaging for autonomous vehicle applications.",
+        "Assessed non-line-of-sight object detection capability of SPAD sensors, lasers, and optics, along with implementation trade-offs.",
+        "Presented feasibility, risks, deployment recommendations, and economic considerations for real-world implementation."
+      ]
+    },
+    {
+      "name": "Optimizing Wind Turbine Operation for Bird Collision Prevention",
+      "tech": ["Radar", "LiDAR", "Multi-sensor Integration", "System Design"],
+      "status": "Completed",
+      "metrics": {
+        "team_size": "3 members",
+        "cost_savings": "Multi-million dollar potential"
+      },
+      "bullets": [
+        "Led a 3-member team developing a wind turbine collision avoidance system to reduce bird strikes.",
+        "Designed a multi-sensor detection system integrating radar and LiDAR for real-time object detection and automated collision mitigation.",
+        "Showcased multi-million-dollar cost savings potential by reducing bird collisions and associated fines."
+      ]
+    },
+    {
+      "name": "Honeycomb Core Sandwich Composite Panels - Bending Properties",
+      "tech": ["Fusion 360", "3D Printing", "2-way ANOVA / DoE", "3-Point Load Testing"],
+      "status": "Completed",
+      "metrics": {
+        "institution": "Dayananda Sagar University"
+      },
+      "bullets": [
+        "Designed and fabricated lightweight honeycomb core sandwich composite panels using Fusion 360 and analyzed bending strength through 3-point load testing.",
+        "Conducted 2-way ANOVA (DoE) to study how geometry variation affected structural properties and strength-to-weight performance, and optimized core geometry configurations accordingly.",
+        "Managed 3D printing and material selection to ensure precise fabrication and evaluate prototype performance."
+      ]
+    },
+    {
+      "name": "Self-Propelled Onion Harvester",
+      "tech": ["Mechanical Design", "Powertrain Design", "Laser Sensing", "Image Detection"],
+      "status": "Completed",
+      "metrics": {
+        "team_size": "25 members",
+        "maintenance_cost_reduction": "40%",
+        "harvesting_time_reduction": "50%",
+        "yield_estimation_time_reduction": "50%"
+      },
+      "bullets": [
+        "Led a 25-member team developing a self-propelled, low-maintenance onion harvester with improved harvesting efficiency.",
+        "Managed 4 sub-teams to reduce maintenance cost by 40% and harvesting time by 50%.",
+        "Contributed to chassis design, steering mechanism, and powertrain gear ratio development.",
+        "Engineered a laser and image-detection-based yield estimation solution, reducing estimation time by 50%."
+      ]
+    }
+  ],
+
+  "certifications": [
+    "GD&T Full Learning Based on ASME Y14.5 (Udemy, Feb 2026)",
+    "Lean Six Sigma Yellow Belt (Udemy, March 2026)"
+  ],
+
+  "relevant_coursework": [
+    "Modern Manufacturing Methods",
+    "Intermediate Thermodynamics",
+    "Introduction to Autonomous Vehicle Engineering",
+    "Applied CFD",
+    "Polymers and Composites",
+    "Wind Energy",
+    "Renewable Energy - Mechanical Systems"
+  ],
+
+  "leadership_and_activities": [
+    "Vice President, Sur Devils, Arizona State University, Tempe, AZ (December 2024 to December 2025)",
+    "President, SAE Club, Dayananda Sagar University, Bangalore, India (August 2019 to May 2021)"
+  ]
+}

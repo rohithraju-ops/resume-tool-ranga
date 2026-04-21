@@ -113,54 +113,70 @@ def score_projects(jd_text: str) -> List[dict]:
 
 from pypdf import PdfReader
 
-def compile_resume(tex_path: str, pdf_path: str, font_size: float = 10.5, attempt: int = 1) -> bool:
-    """Compile LaTeX to PDF, shrink if over 1 page. Returns True if successful."""
-    max_attempts = 3
-    min_font = 9.5
+def compile_resume(tex_path: str, pdf_path: str) -> bool:
+    """
+    Compile LaTeX to PDF with progressive compression until it fits 1 page.
+    Tunes font size, line spread, section spacing, project separator, and item spacing.
+    Returns True if a level fit, False if none did.
+    """
 
-    # Read current tex content
+    # Read the injected template once
     with open(tex_path) as f:
-        content = f.read()
+        base_content = f.read()
 
-    # Inject current font size
-    content = re.sub(
-        r'\\documentclass\[letterpaper,[\d.]+pt\]\{article\}',
-        f'\\\\documentclass[letterpaper,{font_size}pt]{{article}}',
-        content
-    )
+   # Prefer dropping font size over crushing spacing — crushed 10pt looks worse than comfortable 9pt.
+    # Each level: (font_pt, linespread, projsep, secbefore, secafter, itemsep)
+    levels = [
+        (10, "1.00", "3pt", "3pt", "2pt", "0pt"),   # generous default
+        (10, "0.98", "3pt", "3pt", "2pt", "0pt"),   # -2% line height, still roomy
+        (10, "0.96", "2pt", "3pt", "2pt", "0pt"),   # -4% line height
+        (10, "0.94", "2pt", "2pt", "1pt", "0pt"),   # visible but acceptable
+        ( 9, "1.00", "3pt", "3pt", "2pt", "0pt"),   # drop font, restore spacing ← new sweet spot
+        ( 9, "0.97", "2pt", "3pt", "2pt", "0pt"),   # 9pt with mild compression
+        ( 9, "0.94", "1pt", "2pt", "1pt", "0pt"),   # 9pt compressed
+        ( 8, "1.00", "2pt", "2pt", "1pt", "0pt"),   # 8pt last resort with spacing
+        ( 8, "0.95", "0pt", "1pt", "1pt", "0pt"),   # absolute last resort
+    ]
 
-    # Tighten margins progressively on each attempt
-    if attempt > 1:
-        tight_vspace = f'\\addtolength{{\\topmargin}}{{-{0.05 * attempt}in}}'
-        content = content.replace("\\begin{document}", f"{tight_vspace}\n\\begin{{document}}")
+    for idx, (font, spread, projsep, secbefore, secafter, itemsep) in enumerate(levels):
+        content = base_content
 
-    with open(tex_path, "w") as f:
-        f.write(content)
+        # Set font size in documentclass (works because we use extarticle, not article)
+        content = re.sub(
+            r'\\documentclass\[[^\]]*,[\d.]+pt\]\{ext?article\}',
+            f'\\\\documentclass[a4paper,{font}pt]{{extarticle}}',
+            content
+        )
 
-    result = subprocess.run(
-        ["tectonic", "--outdir", os.path.dirname(tex_path), tex_path],
-        capture_output=True, text=True, cwd=os.path.dirname(tex_path)
-    )
+        # Fill compression knobs
+        content = content.replace("XLINESPREADX", spread)
+        content = content.replace("XPROJSEPX", projsep)
+        content = content.replace("XSECBEFOREX", secbefore)
+        content = content.replace("XSECAFTERX", secafter)
+        content = content.replace("XITEMSEPX", itemsep)
 
-    if result.returncode != 0:
-        raise HTTPException(status_code=500, detail=f"tectonic failed: {result.stderr}")
+        with open(tex_path, "w") as f:
+            f.write(content)
 
-    if os.path.exists(tex_path):
-        os.remove(tex_path)
+        result = subprocess.run(
+            ["tectonic", "--outdir", os.path.dirname(tex_path), tex_path],
+            capture_output=True, text=True, cwd=os.path.dirname(tex_path)
+        )
 
-    # Check page count
-    reader = PdfReader(pdf_path)
-    pages = len(reader.pages)
+        if result.returncode != 0:
+            print(f"⚠️ tectonic failed at level {idx}: {result.stderr[:300]}")
+            continue
 
-    if pages <= 1:
-        return True
+        pages = len(PdfReader(pdf_path).pages)
+        print(f"📄 Level {idx}: font={font}pt, spread={spread}, projsep={projsep} → {pages} page(s)")
 
-    # Over 1 page — try again with smaller font
-    next_font = round(font_size - 0.5, 1)
-    if next_font < min_font or attempt >= max_attempts:
-        return False  # Caller will drop a project and retry
+        if pages <= 1:
+            if os.path.exists(tex_path):
+                os.remove(tex_path)
+            return True
 
-    return compile_resume(tex_path, pdf_path, font_size=next_font, attempt=attempt + 1)
+    # Nothing fit — leave tex file for debugging
+    return False
 
 from fastapi import HTTPException
 from pydantic import BaseModel
@@ -182,7 +198,7 @@ async def analyze_jd(request: JDRequest):
         "projects": projects
     }
 
-import anthropic
+from openai import OpenAI
 import subprocess
 import uuid
 from datetime import datetime
@@ -193,16 +209,21 @@ async def generate(request: JDRequest):
     if not request.jd_text.strip():
         raise HTTPException(status_code=400, detail="JD text cannot be empty")
 
+    import traceback
+
     job_id = f"manual_{uuid.uuid4().hex[:8]}"
-    client = anthropic.Anthropic()
+    client = OpenAI(
+        base_url="https://openrouter.ai/api/v1",
+        api_key=os.getenv("OPENROUTER_API_KEY")
+    )
 
     # Load prompts
     with open(os.path.join(PROMPTS_DIR, "resume_tailor.txt")) as f:
         resume_prompt = f.read()
 
     # Tailor resume via Claude Sonnet
-    resume_response = client.messages.create(
-        model="claude-sonnet-4-5",
+    resume_response = client.chat.completions.create(
+        model="anthropic/claude-sonnet-4-5",
         max_tokens=4000,
         messages=[{
             "role": "user",
@@ -210,7 +231,8 @@ async def generate(request: JDRequest):
         }]
     )
 
-    tailored = resume_response.content[0].text
+    tailored = resume_response.choices[0].message.content
+
 
     # Load and inject into LaTeX template
     with open(os.path.join(DATA_DIR, "resume_template.tex")) as f:
@@ -221,30 +243,91 @@ async def generate(request: JDRequest):
 
     # Parse Claude's JSON response
     import re
+    
     json_match = re.search(r'\{.*\}', tailored, re.DOTALL)
     if not json_match:
         raise HTTPException(status_code=500, detail="Claude did not return valid JSON")
     
-    tailored_data = json.loads(json_match.group())
+    raw_json = json_match.group()
+    try:
+        tailored_data = json.loads(raw_json)
+    except json.JSONDecodeError:
+        # Claude sometimes pre-escapes LaTeX chars (\%, \&, \$, \#, \_) inside JSON,
+        # which is invalid JSON. Strip those backslashes so parsing succeeds.
+        # escape_latex_specials will re-add them properly for LaTeX output.
+        cleaned = re.sub(r'(?<!\\)\\([%&$#_])', r'\1', raw_json)
+        try:
+            tailored_data = json.loads(cleaned)
+            print("⚠️ Recovered from invalid JSON escapes (Claude pre-escaped LaTeX chars)")
+        except json.JSONDecodeError as e:
+            raise HTTPException(status_code=500, detail=f"JSON parse failed even after cleanup: {e}")
+
+    import re as _re
+
+    def escape_latex_specials(text: str) -> str:
+        """Escape unescaped & and % in LaTeX block content."""
+        text = _re.sub(r'(?<!\\)&', r'\\&', text)
+        text = _re.sub(r'(?<!\\)%', r'\\%', text)
+        return text
+
+    block_fields = ["skills_block", "exp_1_bullets", "exp_2_bullets", "exp_3_bullets",
+                    "project_1_block", "project_2_block", "project_3_block", "project_4_block", "project_5_block"]
+
+    def inject_template(td):
+        t = open(os.path.join(DATA_DIR, "resume_template.tex")).read()
+        t = t.replace("SUMMARY\\_PLACEHOLDER", sanitize(td.get("summary", "")))
+        t = t.replace("SKILLS\\_BLOCK\\_PLACEHOLDER", td.get("skills_block", ""))
+        t = t.replace("EXP\\_1\\_BULLETS\\_PLACEHOLDER", td.get("exp_1_bullets", ""))
+        t = t.replace("EXP\\_2\\_BULLETS\\_PLACEHOLDER", td.get("exp_2_bullets", ""))
+        t = t.replace("EXP\\_3\\_BULLETS\\_PLACEHOLDER", td.get("exp_3_bullets", ""))
+        for i in range(1, 6):
+            t = t.replace(f"PROJECT\\_{i}\\_BLOCK", td.get(f"project_{i}_block", ""))
+        return t
+
+    def collapse_item_lines(text: str) -> str:
+        lines = text.split('\n')
+        result = []
+        for line in lines:
+            stripped = line.strip()
+            if stripped.startswith('\\item') or stripped.startswith('\\noindent') or stripped.startswith('\\begin') or stripped.startswith('\\end'):
+                result.append(line)
+            elif result and stripped and not stripped.startswith('\\'):
+                result[-1] = result[-1].rstrip() + ' ' + stripped
+        return '\n'.join(result)
+
+    for field in block_fields:
+        if field in tailored_data:
+            tailored_data[field] = tailored_data[field].replace('\\n\\n', '\\n')
+            tailored_data[field] = re.sub(r'\\n(?!\w)', '\n', tailored_data[field])
+            tailored_data[field] = escape_latex_specials(tailored_data[field])
+            tailored_data[field] = re.sub(r'(?<!\\n)(\\item)', r'\n\1', tailored_data[field])
+            tailored_data[field] = re.sub(r'\n{2,}', '\n', tailored_data[field])
+            tailored_data[field] = re.sub(r'\n\s+\n', '\n', tailored_data[field])
+            tailored_data[field] = collapse_item_lines(tailored_data[field])
+            tailored_data[field] = tailored_data[field].strip()
+
+    print("DEBUG tailored_data:", json.dumps(tailored_data, indent=2))
+    template = inject_template(tailored_data)
 
     # Extract company + role using Haiku
     try:
-        extract_response = client.messages.create(
-            model="claude-haiku-4-5",            
+        extract_response = client.chat.completions.create(
+            model="anthropic/claude-sonnet-4-5",
             max_tokens=100,
             messages=[{
                 "role": "user",
                 "content": f"Extract the company name and job title from this job description. Respond with only JSON like {{\"company\": \"...\", \"role\": \"...\"}}. JD: {request.jd_text[:1000]}"
             }]
         )
+
         import json as _json
         import re as _re
-        raw = extract_response.content[0].text
+        raw = extract_response.choices[0].message.content
         json_match2 = _re.search(r'\{.*\}', raw, _re.DOTALL)
         if json_match2:
             extracted = _json.loads(json_match2.group())
-            company = extracted.get("company", "Unknown")
-            role = extracted.get("role", "Unknown")
+            company = extracted.get("company") or "Unknown"
+            role = extracted.get("role") or "Unknown"
         else:
             company = "Unknown"
             role = "Unknown"
@@ -257,48 +340,42 @@ async def generate(request: JDRequest):
 
     safe_company = company.replace(" ", "_").replace("/", "-")
     safe_role = role.replace(" ", "_").replace("/", "-")
-    resume_filename = f"Rohith_Raju_Resume_{safe_company}_{safe_role}.pdf"
-    cover_letter_filename = f"Rohith_Raju_CoverLetter_{safe_company}_{safe_role}.pdf"
+    resume_filename = f"Rangarajan_Resume_{safe_company}_{safe_role}.pdf"
+    cover_letter_filename = f"Rangarajan_CoverLetter_{safe_company}_{safe_role}.pdf"
 
     # Write and compile
-    tex_path = os.path.join(OUTPUT_DIR, f"Rohith_Raju_Resume_{safe_company}_{safe_role}.tex")
-    pdf_path = os.path.join(OUTPUT_DIR, f"Rohith_Raju_Resume_{safe_company}_{safe_role}.pdf")
+    tex_path = os.path.join(OUTPUT_DIR, f"Rangarajan_Resume_{safe_company}_{safe_role}.tex")
+    pdf_path = os.path.join(OUTPUT_DIR, f"Rangarajan_Resume_{safe_company}_{safe_role}.pdf")
 
     # Inject flat keys Claude returns directly into template
 
-    for i in range(1, 6):
-        template = template.replace(f"PROJECT\\_{i}\\_NAME", sanitize(tailored_data.get(f"project_{i}_name", "")))
-        template = template.replace(f"PROJECT\\_{i}\\_TECH", sanitize(tailored_data.get(f"project_{i}_tech", "")))
-        template = template.replace(f"BULLETS\\_{i}\\_PLACEHOLDER", sanitize(tailored_data.get(f"project_{i}_bullets", "")))
-
-    template = template.replace("SUMMARY\\_PLACEHOLDER", sanitize(tailored_data.get("summary", "")))
-    template = template.replace("SKILLS\\_PLACEHOLDER", sanitize(tailored_data.get("skills", "")))
-    template = template.replace("EXPERIENCE\\_BULLET\\_1", sanitize(tailored_data.get("experience_bullet_1", "")))
-    template = template.replace("EXPERIENCE\\_BULLET\\_2", sanitize(tailored_data.get("experience_bullet_2", "")))
-    template = template.replace("EXPERIENCE\\_BULLET\\_3", sanitize(tailored_data.get("experience_bullet_3", "")))
-
-    # Remove empty project slots that would break LaTeX
-    import re as _re
-    template = _re.sub(
-        r'  \\resumeProjectHeading\n\s*\{\\textbf\{\} \$\|\$ \\emph\{\}\}\{\}\n\s*\\resumeItemListStart\n\s*\n\s*\\resumeItemListEnd\n',
-        '',
-        template
-    )
-
+    # Write injected template to disk, then compile with progressive compression
     with open(tex_path, "w") as f:
         f.write(template)
 
-    compiled = compile_resume(tex_path, pdf_path)
-    if not compiled:
-        raise HTTPException(status_code=500, detail="Could not fit resume to one page")
+    print("DEBUG tailored_data:", json.dumps(tailored_data, indent=2))
 
+    try:
+        compiled = compile_resume(tex_path, pdf_path)
+    except HTTPException:
+        raise
+    except Exception as e:
+        print("COMPILE EXCEPTION:", traceback.format_exc())
+        raise HTTPException(status_code=500, detail=str(e))
+
+    if not compiled:
+        raise HTTPException(
+            status_code=500,
+            detail="Could not fit resume to one page even at max compression (font=8pt, spread=0.95). Content is genuinely too long — trim a project or shorten bullets."
+        )
+        
     # Load cover letter prompt
     with open(os.path.join(PROMPTS_DIR, "cover_letter.txt")) as f:
         cl_prompt = f.read()
 
     # Generate cover letter via Claude Sonnet
-    cl_response = client.messages.create(
-        model="claude-sonnet-4-5",
+    cl_response = client.chat.completions.create(
+        model="anthropic/claude-sonnet-4-5",
         max_tokens=2000,
         messages=[{
             "role": "user",
@@ -306,7 +383,7 @@ async def generate(request: JDRequest):
         }]
     )
 
-    cl_text = cl_response.content[0].text
+    cl_text = cl_response.choices[0].message.content
 
     # Generate cover letter PDF via LaTeX
     with open(os.path.join(DATA_DIR, "cover_letter_template.tex")) as f:
@@ -326,8 +403,8 @@ async def generate(request: JDRequest):
     
     cl_template = cl_template.replace("COVER\\_LETTER\\_BODY", sanitize(cl_paragraphs))
 
-    cl_tex_path = os.path.join(OUTPUT_DIR, f"Rohith_Raju_CoverLetter_{safe_company}_{safe_role}.tex")
-    cl_pdf_path = os.path.join(OUTPUT_DIR, f"Rohith_Raju_CoverLetter_{safe_company}_{safe_role}.pdf")
+    cl_tex_path = os.path.join(OUTPUT_DIR, f"Rangarajan_CoverLetter_{safe_company}_{safe_role}.tex")
+    cl_pdf_path = os.path.join(OUTPUT_DIR, f"Rangarajan_CoverLetter_{safe_company}_{safe_role}.pdf")
 
     with open(cl_tex_path, "w") as f:
         f.write(cl_template)

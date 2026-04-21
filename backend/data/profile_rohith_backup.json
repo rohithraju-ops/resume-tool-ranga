@@ -1,0 +1,241 @@
+{
+    "full_name": "Rohith Raju",
+    "email": "rohithrajuwork@gmail.com",
+    "phone": "+1 (623)-210-2389",
+    "location": "Tempe, AZ",
+    "linkedin": "https://www.linkedin.com/in/rohith-raju/",
+    "github": "https://github.com/rohithraju-ops",
+    "university": "Arizona State University",
+    "degree": "MS in Data Science, Analytics and Engineering",
+    "gpa": "3.78",
+    "graduation_date": "May 2026",
+    "visa_status": "F1-OPT",
+    "requires_sponsorship": true,
+    "work_authorization_note": "Eligible for OPT. Open to sponsorship.",
+    "target_roles": ["ML Engineer", "Data Scientist", "AI Engineer", "Data Engineer", "Data Analyst", "Business Intelligence Engineer", "Analytics Engineer", "Research Scientist", "Applied Scientist", "Machine Learning Researcher", "Data Science Intern", "ML Engineer Intern", "Data Engineer Intern", "Data Analyst Intern", "Software Engineer Intern"],
+    "target_locations": ["Remote", "Tempe AZ", "San Francisco CA", "Seattle WA", "New York NY", "Austin TX"],
+    "salary_expectation": "90000-120000",
+    "open_to_internships": true,
+    "employment_types": ["Full-Time", "Internship", "Co-op", "Contract"],
+    "skills": {
+      "languages": ["Python", "SQL", "Julia"],
+      "deep_learning": ["PyTorch", "TensorFlow", "ResNet50", "EfficientNet", "DenseNet", "Transfer Learning", "CNN"],
+      "machine_learning": ["Scikit-Learn", "XGBoost", "Random Forest", "Ensemble Methods", "SHAP", "Feature Engineering", "MLflow", "Weights & Biases"],
+      "data_engineering": ["Docker", "Kubernetes", "Kafka", "Neo4j", "Helm", "Minikube", "ETL Pipelines", "DuckDB", "Polars"],
+      "databases": ["ChromaDB", "Neo4j", "SQLite", "PostgreSQL", "Supabase", "DuckDB"],
+      "ai_and_llm": ["RAG", "FastAPI", "Ollama", "ChromaDB", "LangChain", "LangGraph", "CrewAI", "Embeddings", "Vector Databases", "Agentic AI"],
+      "data_analysis": ["Pandas", "NumPy", "SciPy", "Statsmodels", "ANOVA", "Hypothesis Testing", "Regression"],
+      "visualization": ["Tableau", "Matplotlib", "Seaborn", "SwaggerUI"],
+      "tools_platforms": ["AWS", "Git", "Jupyter", "Linux", "Unix", "Uvicorn", "Vercel", "Stripe", "Clerk"]
+    },
+    "work_experience": [
+      {
+        "company": "TVS Motor Company",
+        "location": "Karnataka, IN",
+        "title": "Project Trainee",
+        "duration": "2021",
+        "bullets": [
+          "Analyzed painting-line defect data to identify bottlenecks and process issues in daily production.",
+          "Built visualization reports for leadership, supporting corrective actions that reduced rework by approximately 3-5%."
+        ]
+      }
+    ],
+    "projects": [
+    {
+      "name": "Macro-Equity Analytics Dashboard",
+      "tech": ["Python", "Polars", "DuckDB", "FastAPI", "Uvicorn", "React", "Vercel", "FRED API", "Yahoo Finance"],
+      "status": "In Progress",
+      "metrics": {
+        "data_history": "20+ years of Federal Reserve macro data",
+        "indicators": "10+ Fed macro indicators",
+        "datasets": "FRED macro + S&P 500 equity data combined",
+        "query_performance": "sub-second via DuckDB",
+        "deployment": "Live on Vercel"
+      },
+      "bullets": [
+        "Building end-to-end macroeconomic analytics dashboard ingesting 20+ years of FRED data across 10+ indicators including Fed Funds Rate, CPI, unemployment, GDP, and the 10Y-2Y yield spread alongside S&P 500 equity history.",
+        "Implementing anomaly detection to flag macro-driven market dislocations across historical events including the 2008 crisis, COVID crash, and 2022 rate hike cycle.",
+        "Engineering modern data stack using Polars for fast dataframe processing, DuckDB for sub-second SQL queries, FastAPI for the backend API, and React deployed on Vercel for the live frontend."
+      ]
+    },
+    {
+      "name": "Auto-Apply Agent",
+      "tech": ["Python", "LangGraph", "CrewAI", "FastAPI", "LLM", "Agentic AI"],
+      "status": "In Progress",
+      "metrics": {
+        "type": "Agentic AI system",
+        "goal": "Automated end-to-end job application pipeline"
+      },
+      "bullets": [
+        "Building an agentic AI system to automate the end-to-end job application workflow using LLM-driven decision making and multi-step orchestration.",
+        "Designing the agent pipeline to handle job discovery, resume tailoring, and application submission with minimal human intervention.",
+        "Applying LangGraph for stateful agent orchestration and multi-step task execution across dynamic job application flows."
+      ]
+    },
+    {
+      "name": "Smart Parking Management System",
+      "tech": ["Python", "Computer Vision", "FastAPI", "Docker", "React", "Supabase", "Stripe", "Clerk", "Vercel", "Cloudflare"],
+      "status": "Planning",
+      "metrics": {
+        "type": "Full-stack CV + SaaS system",
+        "target_users": "Accessibility-focused, elderly users",
+        "deployment": "Live production URL"
+      },
+      "bullets": [
+        "Designing a full-stack smart parking system using Computer Vision for automated license plate recognition, eliminating manual plate entry for accessibility.",
+        "Building production-grade SaaS infrastructure with Supabase for real-time session and occupancy data, Stripe for payment processing, and Clerk for lot manager authentication.",
+        "Architecting an accessibility-first React frontend optimized for elderly users, informed by firsthand UX and accessibility observations, with deployment on Vercel and Cloudflare."
+      ]
+    },
+    {
+      "name": "AI Semiconductor Wafer Defect Detection System",
+      "tech": ["Python", "PyTorch", "ResNet50", "EfficientNet", "DenseNet", "CNN", "Transfer Learning", "Computer Vision"],
+      "semester": "Spring 2026 (Capstone)",
+      "status": "In Progress",
+      "metrics": {
+        "dataset_size": "811K wafer maps",
+        "classes": "9 defect pattern classes",
+        "target_accuracy": "94%",
+        "class_imbalance_ratio": "8:1",
+        "inference_target": "sub-500ms"
+      },
+      "bullets": [
+        "Building deep learning pipeline to classify semiconductor wafer defects across 9 pattern classes using WM-811K dataset of 811K+ real wafer maps.",
+        "Implementing ensemble of ResNet50, EfficientNet-B3, and DenseNet121 with weighted soft voting and test-time augmentation for robust classification.",
+        "Addressing class imbalance using stratified sampling, class-weighted loss functions, and oversampling for rare defect patterns.",
+        "Targeting sub-500ms inference for integration into fab workflows to reduce yield loss."
+      ]
+    },
+    {
+      "name": "Loan Default Prediction Pipeline",
+      "tech": ["Python", "XGBoost", "Scikit-Learn", "SHAP", "Pandas", "Matplotlib"],
+      "status": "In Progress",
+      "metrics": {
+        "dataset_size": "50K records",
+        "auc_score": "87% AUC",
+        "features_engineered": "15+ features",
+        "top_risk_drivers": "top 5 risk drivers"
+      },
+      "bullets": [
+        "Building end-to-end ML pipeline to predict loan defaults using XGBoost ensemble with hyperparameter tuning.",
+        "Applying SHAP explainability framework to identify top 5 risk drivers for interpretable credit decisions.",
+        "Performing feature engineering across 15+ financial features to improve model generalization."
+      ]
+    },
+    {
+      "name": "RAG API with FastAPI and ChromaDB",
+      "tech": ["Python", "FastAPI", "ChromaDB", "Ollama", "Uvicorn", "Vector Embeddings"],
+      "status": "Completed",
+      "metrics": {
+        "response_time": "sub-300ms average",
+        "endpoints": "2 REST endpoints",
+        "architecture": "fully local LLM inference"
+      },
+      "bullets": [
+        "Built production-ready RAG API using FastAPI and ChromaDB for vector storage with Ollama for fully local LLM inference.",
+        "Implemented document embedding pipeline converting knowledge base into searchable vector representations.",
+        "Designed dynamic /add endpoint for real-time knowledge base updates without server restarts, tested via SwaggerUI."
+      ]
+    },
+    {
+      "name": "Real-Time Data Processing Pipeline with Kubernetes & Kafka",
+      "tech": ["Python", "Kubernetes", "Kafka", "Neo4j", "Helm", "Docker", "Minikube"],
+      "semester": "Fall 2025",
+      "status": "Completed",
+      "metrics": {
+        "data_volume": "1.5M NYC taxi records",
+        "microservices": "5 microservices",
+        "ingestion_rate": "200K records/hour",
+        "latency": "sub-2s end-to-end"
+      },
+      "bullets": [
+        "Built streaming data pipeline using Kubernetes, Kafka, and Neo4j to ingest and process NYC taxi trip data in real time.",
+        "Orchestrated 5 microservices with Minikube and Helm, using Kafka Connect to move data from topics into Neo4j.",
+        "Deployed ZooKeeper, Kafka, Neo4j, and connector services via Kubernetes YAML for a highly available data pipeline."
+      ]
+    },
+    {
+      "name": "Graph Data Processing System with Neo4j & Docker",
+      "tech": ["Python", "Neo4j", "Docker", "Pandas", "PyArrow", "Graph Algorithms"],
+      "semester": "Fall 2025",
+      "status": "Completed",
+      "metrics": {
+        "relationships_modeled": "millions of trip relationships",
+        "algorithms": "PageRank and BFS",
+        "etl_records": "1M+ records transformed"
+      },
+      "bullets": [
+        "Engineered Dockerized Neo4j environment to model millions of taxi trip relationships as a graph.",
+        "Implemented PageRank and BFS using Neo4j Graph Data Science for location importance and reachability.",
+        "Automated ETL with Python to load and transform 1M+ records into an optimized node-relationship schema."
+      ]
+    },
+    {
+      "name": "6G Smart Manufacturing Quality & Efficiency Analysis",
+      "tech": ["Python", "Scikit-Learn", "Pandas", "SciPy", "Statsmodels", "Random Forest"],
+      "semester": "Fall 2025",
+      "status": "Completed",
+      "metrics": {
+        "dataset_size": "10K production records",
+        "accuracy": "97% test accuracy",
+        "variables_analyzed": "8 operational variables",
+        "energy_reduction": "12%",
+        "defect_reduction": "15%",
+        "p_value": "p < 0.01"
+      },
+      "bullets": [
+        "Built Random Forest model to classify manufacturing efficiency status with 97% test accuracy on 10K production records.",
+        "Performed ANOVA and hypothesis testing on 8 operational variables, identifying key drivers reducing defect rates by 15%.",
+        "Conducted regression analysis proving high-efficiency conditions decreased energy consumption by 12% with p < 0.01."
+      ]
+    },
+    {
+      "name": "Healthcare Analytics Dashboard for Diabetes Patients",
+      "tech": ["Python", "Tableau", "Pandas"],
+      "semester": "Fall 2025",
+      "status": "Completed",
+      "metrics": {
+        "patient_records": "100K+ encounters",
+        "hospitals": "130 US hospitals",
+        "attributes": "50+ clinical attributes",
+        "views_created": "5 interactive views"
+      },
+      "bullets": [
+        "Designed Tableau dashboard over 100K+ diabetic patient encounters from 130 US hospitals to explore readmission trends.",
+        "Cleaned and prepared 50+ clinical attributes in Python including diagnoses, medications, and utilization metrics.",
+        "Created 5 interactive views with filters and calculated fields to help stakeholders identify high-risk groups."
+      ]
+    },
+    {
+      "name": "Predicting User Age from Rating Patterns using ML",
+      "tech": ["Python", "Scikit-Learn", "Pandas", "Feature Engineering"],
+      "semester": "Fall 2024",
+      "status": "Completed",
+      "metrics": {
+        "dataset_size": "100K+ platform ratings",
+        "error_reduction": "5-8%",
+        "team_size": "3 members"
+      },
+      "bullets": [
+        "Collaborated with a 3-member team to build an ML pipeline predicting user age from 100K+ platform ratings.",
+        "Performed data cleaning, feature engineering, and model tuning reducing prediction error by 5-8%.",
+        "Delivered technical report summarizing methodology, evaluation metrics, and key insights for stakeholders."
+      ]
+    }
+    ],
+    "experience_bullets": [
+      "Analyzed painting-line defect data to identify bottlenecks and process issues in daily production.",
+      "Built visualization reports for leadership, supporting corrective actions that reduced rework by approximately 3-5%."
+    ],
+    "certifications": [
+      "AWS Certified Cloud Practitioner (CLF-C02)"
+    ],
+    "relevant_coursework": [
+      "Data Processing at Scale",
+      "Statistics for Data Analysts",
+      "Data Visualization",
+      "Optimization Algorithms",
+      "Artificial Intelligence",
+      "Database Management Systems"
+    ]
+  }

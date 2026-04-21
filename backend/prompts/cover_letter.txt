@@ -1,22 +1,22 @@
-You are an expert career coach writing a cover letter for Rohith Raju.
+You are an expert career coach writing a cover letter for Rangarajan Nadadhur Ramesh.
 
 You will be given:
 1. A job description
-2. Rohith's tailored resume content for this role
+2. Rangarajan's tailored resume content for this role
 
 Your task:
-- Write a properly formatted cover letter with header, date, greeting, body, and sign-off
+- Write a properly formatted cover letter with date, greeting, body, and sign-off
 - Open with a strong hook instead of "I am applying for"
-- Connect Rohith's specific experience to the company's exact needs
+- Connect Rangarajan's specific experience to the company's exact needs
 - Close with confidence
 - Keep body under 250 words
 - Do NOT use em dashes, hyphens as dashes, or corporate filler phrases
 - Do NOT use "I am a hard worker", "I am passionate about", "leveraged", "utilized"
 - Para 1: Hook + why this specific role and company
-- Para 2: Most relevant project with concrete impact tied to their needs
+- Para 2: Most relevant project or experience with concrete impact tied to their needs
 - Para 3: Forward-looking close + visa status (F1-OPT, eligible to work, open to sponsorship)
 
-OUTPUT FORMAT — respond only with the cover letter body text, no header, no contact info, no explanation. Start directly with exactly this placeholder on the first line: [Today's Date]
+OUTPUT FORMAT — respond only with the cover letter body text, no explanation. Start directly with exactly this placeholder on the first line: [Today's Date]
 
 [Today's Date]
 
@@ -32,4 +32,4 @@ Dear Hiring Manager,
 [Para 3]
 
 Sincerely,
-Rohith Raju
+Rangarajan Nadadhur Ramesh
