@@ -26,7 +26,7 @@
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
-\raggedbottom
+% \raggedbottom  % disabled — let LaTeX distribute whitespace instead of bunching it at the bottom
 \raggedright
 
 % --- Compression knob 1: line spread ---
@@ -38,7 +38,7 @@
 }{}{0em}{}[\vspace{-6pt}\rule{\linewidth}{0.4pt}\vspace{-4pt}]
 
 % --- Compression knob 2: section spacing ---
-\titlespacing{\section}{0pt}{XSECBEFOREX}{XSECAFTERX}
+\titlespacing{\section}{0pt}{XSECBEFOREX plus 3pt}{XSECAFTERX plus 2pt}
 
 % --- Compression knob 3: itemize spacing ---
 \setlist[itemize]{
@@ -93,19 +93,19 @@ Dayananda Sagar University, Karnataka, India \hfill \textit{CGPA: 8.36}
 %---------- PROFESSIONAL EXPERIENCE ----------
 \section{PROFESSIONAL EXPERIENCE}
 
-\noindent \textbf{Aktis Engineering Solutions Pvt. Ltd., Bangalore, India \textbar{} Design Engineer} \hfill \textit{Sep 2022 to Jul 2024}
+\noindent \textbf{Design Engineer, Aktis Engineering Solutions Pvt. Ltd., Bangalore, India} \hfill \textit{Sep 2022 to Jul 2024}
 \begin{itemize}
   EXP\_1\_BULLETS\_PLACEHOLDER
 \end{itemize}
 
 \vspace{2pt}
-\noindent \textbf{Pactera EDGE (now Centific), Hyderabad, India \textbar{} Project Associate} \hfill \textit{Mar 2022 to Aug 2022}
+\noindent \textbf{Project Associate, Pactera EDGE (now Centific), Hyderabad, India} \hfill \textit{Mar 2022 to Aug 2022}
 \begin{itemize}
   EXP\_2\_BULLETS\_PLACEHOLDER
 \end{itemize}
 
 \vspace{2pt}
-\noindent \textbf{Bosch Rexroth in Collaboration with DSU, Bangalore, Karnataka, India \textbar{} Intern} \hfill \textit{Feb 2021 to Apr 2021}
+\noindent \textbf{Intern, Bosch Rexroth in Collaboration with DSU, Bangalore, Karnataka, India } \hfill \textit{Feb 2021 to Apr 2021}
 \begin{itemize}
   EXP\_3\_BULLETS\_PLACEHOLDER
 \end{itemize}
@@ -114,13 +114,13 @@ Dayananda Sagar University, Karnataka, India \hfill \textit{CGPA: 8.36}
 \section{ACADEMIC PROJECTS}
 
 PROJECT\_1\_BLOCK
-\vspace{XPROJSEPX}
+\vspace{XPROJSEPX plus 4pt}
 PROJECT\_2\_BLOCK
-\vspace{XPROJSEPX}
+\vspace{XPROJSEPX plus 4pt}
 PROJECT\_3\_BLOCK
-\vspace{XPROJSEPX}
+\vspace{XPROJSEPX plus 4pt}
 PROJECT\_4\_BLOCK
-\vspace{XPROJSEPX}
+\vspace{XPROJSEPX plus 4pt}
 PROJECT\_5\_BLOCK
 
 \end{document}

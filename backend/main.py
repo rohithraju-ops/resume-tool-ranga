@@ -116,40 +116,35 @@ from pypdf import PdfReader
 
 def compile_resume(tex_path: str, pdf_path: str) -> bool:
     """
-    Compile LaTeX to PDF with progressive compression until it fits 1 page.
-    Tunes font size, line spread, section spacing, project separator, and item spacing.
-    Returns True if a level fit, False if none did.
+    Compile LaTeX to PDF. Find the LOOSEST compression level that still fits 1 page.
+    This eliminates whitespace-after-squish: instead of picking the first level that fits,
+    we pick the level with the most breathing room that still fits.
     """
-
-    # Read the injected template once
     with open(tex_path) as f:
         base_content = f.read()
 
-   # Prefer dropping font size over crushing spacing — crushed 10pt looks worse than comfortable 9pt.
-    # Each level: (font_pt, linespread, projsep, secbefore, secafter, itemsep)
+    # Levels ordered loose → tight. We scan all that fit, pick the loosest.
     levels = [
-        (10, "1.00", "3pt", "3pt", "2pt", "0pt"),   # generous default
-        (10, "0.98", "3pt", "3pt", "2pt", "0pt"),   # -2% line height, still roomy
-        (10, "0.96", "2pt", "3pt", "2pt", "0pt"),   # -4% line height
-        (10, "0.94", "2pt", "2pt", "1pt", "0pt"),   # visible but acceptable
-        ( 9, "1.00", "3pt", "3pt", "2pt", "0pt"),   # drop font, restore spacing ← new sweet spot
-        ( 9, "0.97", "2pt", "3pt", "2pt", "0pt"),   # 9pt with mild compression
-        ( 9, "0.94", "1pt", "2pt", "1pt", "0pt"),   # 9pt compressed
-        ( 8, "1.00", "2pt", "2pt", "1pt", "0pt"),   # 8pt last resort with spacing
-        ( 8, "0.95", "0pt", "1pt", "1pt", "0pt"),   # absolute last resort
+        (10, "1.00", "5pt", "4pt", "3pt", "0pt"),   # 0: generous 10pt
+        (10, "0.98", "4pt", "3pt", "2pt", "0pt"),   # 1
+        (10, "0.96", "3pt", "3pt", "2pt", "0pt"),   # 2
+        ( 9, "1.00", "4pt", "3pt", "2pt", "0pt"),   # 3: comfortable 9pt
+        ( 9, "0.98", "3pt", "3pt", "2pt", "0pt"),   # 4
+        ( 9, "0.96", "2pt", "2pt", "1pt", "0pt"),   # 5: tight 9pt
+        ( 9, "0.94", "2pt", "2pt", "1pt", "0pt"),   # 6: very tight 9pt
+        ( 8, "1.00", "3pt", "3pt", "2pt", "0pt"),   # 7: last resort
     ]
+
+    best_level = None
 
     for idx, (font, spread, projsep, secbefore, secafter, itemsep) in enumerate(levels):
         content = base_content
 
-        # Set font size in documentclass (works because we use extarticle, not article)
         content = re.sub(
             r'\\documentclass\[[^\]]*,[\d.]+pt\]\{ext?article\}',
             f'\\\\documentclass[a4paper,{font}pt]{{extarticle}}',
             content
         )
-
-        # Fill compression knobs
         content = content.replace("XLINESPREADX", spread)
         content = content.replace("XPROJSEPX", projsep)
         content = content.replace("XSECBEFOREX", secbefore)
@@ -165,25 +160,60 @@ def compile_resume(tex_path: str, pdf_path: str) -> bool:
         )
 
         if result.returncode != 0:
-            print(f"⚠️ tectonic failed at level {idx}: {result.stderr[:300]}")
+            print(f"⚠️ tectonic failed at level {idx}: {result.stderr[:200]}")
             continue
 
         pages = len(PdfReader(pdf_path).pages)
-        print(f"📄 Level {idx}: font={font}pt, spread={spread}, projsep={projsep} → {pages} page(s)")
+        print(f"📄 Level {idx}: font={font}pt, spread={spread} → {pages} page(s)")
+
+        if result.returncode != 0:
+            print(f"⚠️ Level {idx}: tectonic FAILED — {result.stderr[:150]}")
+            continue
 
         if pages <= 1:
-            if os.path.exists(tex_path):
-                os.remove(tex_path)
-            return True
+            best_level = idx
+            break  # loosest that fits — since levels go loose→tight, first fit IS loosest fit
 
-    # Nothing fit — leave tex file for debugging
-    return False
+    if best_level is None:
+        return False
+
+    # Re-compile at best level to make sure the PDF on disk matches
+    font, spread, projsep, secbefore, secafter, itemsep = levels[best_level]
+    content = base_content
+    content = re.sub(
+        r'\\documentclass\[[^\]]*,[\d.]+pt\]\{ext?article\}',
+        f'\\\\documentclass[a4paper,{font}pt]{{extarticle}}',
+        content
+    )
+    content = content.replace("XLINESPREADX", spread)
+    content = content.replace("XPROJSEPX", projsep)
+    content = content.replace("XSECBEFOREX", secbefore)
+    content = content.replace("XSECAFTERX", secafter)
+    content = content.replace("XITEMSEPX", itemsep)
+
+    with open(tex_path, "w") as f:
+        f.write(content)
+
+    subprocess.run(
+        ["tectonic", "--outdir", os.path.dirname(tex_path), tex_path],
+        capture_output=True, text=True, cwd=os.path.dirname(tex_path)
+    )
+
+    print(f"✅ Using Level {best_level}: font={font}pt, spread={spread}")
+
+    if os.path.exists(tex_path):
+        os.remove(tex_path)
+    return True
 
 from fastapi import HTTPException
 from pydantic import BaseModel
 
 class JDRequest(BaseModel):
     jd_text: str
+    aktis_bullets: int = 6
+    pactera_bullets: int = 2
+    bosch_bullets: int = 3
+
 
 @app.post("/analyze")
 async def analyze_jd(request: JDRequest):
@@ -228,7 +258,7 @@ async def generate(request: JDRequest):
         max_tokens=4000,
         messages=[{
             "role": "user",
-            "content": f"{resume_prompt}\n\nJob Description:\n{request.jd_text}\n\nProfile:\n{json.dumps(PROFILE, indent=2)}"
+            "content": f"{resume_prompt}\n\nSTRUCTURAL COUNTS (follow exactly):\n- Aktis: exactly {request.aktis_bullets} bullets\n- Pactera: exactly {request.pactera_bullets} bullets\n- Bosch: exactly {request.bosch_bullets} bullets\n\nJob Description:\n{request.jd_text}\n\nProfile:\n{json.dumps(PROFILE, indent=2)}"
         }]
     )
 
@@ -369,7 +399,20 @@ async def generate(request: JDRequest):
             status_code=500,
             detail="Could not fit resume to one page even at max compression (font=8pt, spread=0.95). Content is genuinely too long — trim a project or shorten bullets."
         )
-        
+    
+    # Generate Word doc from tailored_data using python-docx
+    from backend.docx_builder import build_resume_docx
+    docx_filename = f"Rangarajan_Resume_{safe_company}_{safe_role}.docx"
+    docx_path = os.path.join(OUTPUT_DIR, docx_filename)
+
+    try:
+        build_resume_docx(tailored_data, docx_path, PROFILE)
+    except Exception as e:
+        print(f"⚠️ Word doc generation failed: {e}")
+        import traceback
+        print(traceback.format_exc())
+        docx_filename = None
+
     # Load cover letter prompt
     with open(os.path.join(PROMPTS_DIR, "cover_letter.txt")) as f:
         cl_prompt = f.read()
@@ -444,6 +487,7 @@ async def generate(request: JDRequest):
     return {
         "job_id": job_id,
         "resume_pdf": resume_filename,
+        "resume_docx": docx_filename,
         "cover_letter_pdf": cover_letter_filename,
         "pre_score": {
             "matched": pre_keywords["match_count"],
@@ -470,8 +514,14 @@ async def download_file(filename: str):
     if not os.path.abspath(file_path).startswith(os.path.abspath(OUTPUT_DIR)):
         raise HTTPException(status_code=403, detail="Access denied")
     
+    # Pick correct media type based on extension
+    if filename.lower().endswith(".docx"):
+        media_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    else:
+        media_type = "application/pdf"
+
     return FileResponse(
         path=file_path,
-        media_type="application/pdf",
+        media_type=media_type,
         filename=filename
     )

@@ -8,6 +8,7 @@ function App() {
   const [analysis, setAnalysis] = useState(null)
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
+  const [bullets, setBullets] = useState({ aktis: 6, pactera: 2, bosch: 3 })
 
   const handleAnalyze = async () => {
     if (!jdText.trim()) return
@@ -28,7 +29,12 @@ function App() {
       const res = await fetch('/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ jd_text: jdText })
+        body: JSON.stringify({
+          jd_text: jdText,
+          aktis_bullets: bullets.aktis,
+          pactera_bullets: bullets.pactera,
+          bosch_bullets: bullets.bosch,
+        })
       })
       setResult(await res.json())
     } catch (err) { console.error(err) }
@@ -127,6 +133,7 @@ function App() {
         backdropFilter: 'blur(12px)',
         borderTop: '1px solid var(--border)',
       }}>
+
         {/* Left — actions */}
         <button onClick={handleAnalyze} style={{
           background: 'rgba(255,255,255,0.6)',
@@ -164,6 +171,19 @@ function App() {
         }}>
           {jdText.length.toLocaleString()} chars
         </span>
+
+        {/* Bullet count controls */}
+        <div style={{
+          display: 'flex', alignItems: 'center', gap: '6px',
+          fontFamily: 'var(--font-mono)', fontSize: '9px',
+          color: 'rgba(0,0,0,0.4)', letterSpacing: '0.06em',
+          marginLeft: '12px',
+        }}>
+          <span>BULLETS</span>
+          <BulletInput label="A" value={bullets.aktis} onChange={v => setBullets({ ...bullets, aktis: v })} />
+          <BulletInput label="P" value={bullets.pactera} onChange={v => setBullets({ ...bullets, pactera: v })} />
+          <BulletInput label="B" value={bullets.bosch} onChange={v => setBullets({ ...bullets, bosch: v })} />
+        </div>
 
         {/* Spacer */}
         <div style={{ flex: 1 }} />
@@ -204,8 +224,51 @@ function App() {
           }}>
           ↓ COVER LETTER
         </button>
+        <button
+          onClick={() => handleDownload(result?.resume_docx)}
+          disabled={!result?.resume_docx}
+          style={{
+            background: result?.resume_docx ? '#0a0a0a' : 'var(--bg-muted)',
+            border: '1px solid var(--border)',
+            color: result?.resume_docx ? '#f8f7f4' : 'var(--ink-ghost)',
+            fontFamily: 'var(--font-mono)',
+            fontSize: '10px',
+            letterSpacing: '0.06em',
+            padding: '8px 16px',
+            borderRadius: '7px',
+            cursor: result?.resume_docx ? 'pointer' : 'not-allowed',
+            flexShrink: 0,
+          }}>
+          ↓ RESUME DOCX
+        </button>
       </div>
 
+    </div>
+  )
+}
+function BulletInput({ label, value, onChange }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: '3px' }}>
+      <span style={{ color: 'rgba(0,0,0,0.35)' }}>{label}</span>
+      <input
+        type="number"
+        min="1"
+        max="8"
+        value={value}
+        onChange={e => onChange(Number(e.target.value))}
+        style={{
+          width: '44px',
+          padding: '4px 4px 4px 8px',
+          background: 'rgba(255,255,255,0.5)',
+          border: '1px solid rgba(0,0,0,0.1)',
+          borderRadius: '5px',
+          fontFamily: 'var(--font-mono)',
+          fontSize: '11px',
+          color: 'rgba(0,0,0,0.7)',
+          textAlign: 'left',
+          outline: 'none',
+        }}
+      />
     </div>
   )
 }
